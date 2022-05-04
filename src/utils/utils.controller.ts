@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Post,
   Req,
@@ -7,11 +8,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import * as excelToJson from 'convert-excel-to-json';
-import { unflatten } from 'flat';
+import * as XLSX from 'xlsx';
 
 import { UtilsService } from './utils.service';
 import { FilteredFileDto } from './dto/filtered-file.dto';
+import { ParsedFileBody } from './dto/parse-file-body.dto';
 
 @Controller('utils')
 export class UtilsController {
@@ -25,6 +26,7 @@ export class UtilsController {
   )
   parseFile(
     @Req() request: any,
+    @Body() config: ParsedFileBody,
     @UploadedFile() file: Express.Multer.File,
   ): object {
     if (!file || request.fileValidationError) {
@@ -33,18 +35,9 @@ export class UtilsController {
       );
     }
 
-    const result = excelToJson({
-      source: file.buffer,
-      header: { rows: 1 },
-      columnToKey: {
-        '*': '{{columnHeader}}',
-      },
-    });
+    const workbook = XLSX.read(file.buffer, { sheets: config.sheets });
 
-    return {
-      message: 'Parsed Data',
-      data: unflatten(result),
-    };
+    return this.utilsService.parseFile(config, workbook);
   }
 }
 
