@@ -1,17 +1,29 @@
 export class ParsedFileBody {
-  sheets?: number[] | number;
+  sheets?: number[];
   sheetOptions?: SheetOptions[] = [];
 }
 
-export class SheetOptions {
+export interface SheetOptions {
   name?: string;
-  headerLabels?: string[];
 
-  startingRow?: number[] | number = 1;
-  endingRow?: number[] | number = -1;
-  omitRow?: number[] | number = -1;
+  startingRow?: number;
+  endingRow?: number;
+  omitRow?: number[];
 
-  omitColumns?: number[] | number = -1;
+  columnLabels?: ColumnLabels[];
+  startingColumn?: number;
+  endingColumn?: number;
+  omitColumns?: number[];
 
-  validations?: any;
+  validations?: ColumnValidations[];
+}
+
+export interface ColumnLabels {
+  from: string;
+  to: string;
+}
+
+export interface ColumnValidations {
+  for: string;
+  validator: (arg: any) => boolean;
 }
