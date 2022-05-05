@@ -23,7 +23,6 @@ export class UtilsController {
     @Body() config: any,
     @UploadedFile() file: Express.Multer.File,
   ): object {
-    console.log(`%c[c]`, 'font-weight: bold; color: red', config);
     if (!file) {
       throw new BadRequestException('Please upload a file for parsing.');
     }

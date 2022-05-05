@@ -7,7 +7,6 @@ import { ParsedFileBody, SheetOptions } from './dto/parse-file-body.dto';
 @Injectable()
 export class UtilsService {
   parseFile(config: ParsedFileBody, workbook: XLSX.WorkBook) {
-    console.log(`%c[c]`, 'font-weight: bold; color: red', config);
     const parsedJSON = {};
 
     for (const sheet in workbook.Sheets) {
@@ -19,37 +18,9 @@ export class UtilsService {
         continue;
       }
 
-      // TODO: Set correct config
       const sheetOptions: SheetOptions = config.sheetOptions.find(
         (sheetOption) => sheetOption.name === sheet,
       );
-
-      // const sheetOptions: SheetOptions = {
-      //   startingRow: 2,
-      //   endingRow: 5,
-
-      //   columnLabels: [
-      //     {
-      //       from: 'To-do List',
-      //       to: 'col 1',
-      //     },
-      //     {
-      //       from: ' age',
-      //       to: 'Age',
-      //     },
-      //     {
-      //       from: 'status',
-      //       to: 'Status',
-      //     },
-      //   ],
-
-      //   validations: [
-      //     {
-      //       for: ' age',
-      //       validator: (age) => age > 50,
-      //     },
-      //   ],
-      // };
 
       if (!!sheetOptions) {
         parsedJSON[sheet] = { valid: [], invalid: [] };
@@ -111,7 +82,7 @@ export class UtilsService {
 
     return {
       message: 'Parsed File',
-      data: unflatten(parsedJSON), // Fix sometime flatten not working
+      data: unflatten(parsedJSON),
     };
   }
 }
