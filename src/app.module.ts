@@ -14,9 +14,9 @@ import { TasksModule } from './tasks/tasks.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 55001,
+      port: 5432,
       username: 'postgres',
-      password: 'postgrespw',
+      password: 'postgres',
       database: 'task-management',
       autoLoadEntities: true,
       synchronize: true,
