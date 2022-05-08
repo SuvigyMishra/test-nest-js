@@ -1,21 +1,21 @@
 export class ParsedFileBody {
-  sheets?: number[];
-  sheetOptions?: SheetOptions[] = [];
+  sheets: number[];
+  sheetOptions: SheetOptions[];
 }
 
 export interface SheetOptions {
-  name?: string;
+  name: string;
 
-  startingRow?: number;
-  endingRow?: number;
-  omitRow?: number[];
+  startingRow: number;
+  endingRow: number;
+  omitRow: number[];
 
-  columnLabels?: ColumnLabels[];
-  startingColumn?: number;
-  endingColumn?: number;
-  omitColumns?: number[];
+  columnLabels: ColumnLabels[];
+  startingColumn: number;
+  endingColumn: number;
+  omitColumns: number[];
 
-  validations?: ColumnValidations[];
+  validations: ColumnValidations[];
 }
 
 export interface ColumnLabels {

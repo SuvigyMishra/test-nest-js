@@ -18,7 +18,7 @@ export class UtilsService {
         continue;
       }
 
-      const sheetOptions: SheetOptions = config.sheetOptions.find(
+      const sheetOptions: SheetOptions = config.sheetOptions?.find(
         (sheetOption) => sheetOption.name === sheet,
       );
 

@@ -3,7 +3,6 @@ import {
   Body,
   Controller,
   Post,
-  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
