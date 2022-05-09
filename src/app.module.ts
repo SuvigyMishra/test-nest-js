@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { UtilsModule } from './utils/utils.module';
 import { TasksModule } from './tasks/tasks.module';
+import { InvoiceModule } from './invoice/invoice.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TasksModule } from './tasks/tasks.module';
       synchronize: true,
     }),
     TasksModule,
+    InvoiceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
