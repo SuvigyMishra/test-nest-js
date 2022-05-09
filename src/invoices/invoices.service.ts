@@ -3,24 +3,24 @@ import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
 
 @Injectable()
-export class InvoiceService {
+export class InvoicesService {
   create(createInvoiceDto: CreateInvoiceDto) {
-    return 'This action adds a new invoice';
+    return { message: 'Invoice created', data: {} };
   }
 
   findAll() {
-    return `This action returns all invoice`;
+    return { message: 'Invoice Data', data: [] };
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} invoice`;
+    return { message: `Invoice Data with ID ${id}`, data: {} };
   }
 
   update(id: number, updateInvoiceDto: UpdateInvoiceDto) {
-    return `This action updates a #${id} invoice`;
+    return { message: `Invoice data for ${id} updated`, data: {} };
   }
 
   remove(id: number) {
-    return `This action removes a #${id} invoice`;
+    return { message: `Invoice ${id} removed` };
   }
 }
