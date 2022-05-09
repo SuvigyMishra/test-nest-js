@@ -6,6 +6,8 @@ export class ParsedFileBody {
 export interface SheetOptions {
   name: string;
 
+  disableHeader: boolean;
+
   startingRow: number;
   endingRow: number;
   omitRow: number[];
@@ -25,5 +27,7 @@ export interface ColumnLabels {
 
 export interface ColumnValidations {
   for: string;
-  validator: (arg: any) => boolean;
+  type: string;
+  maxLength: number;
+  minLength: number;
 }

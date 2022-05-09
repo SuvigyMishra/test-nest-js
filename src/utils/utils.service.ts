@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import e from 'express';
 import { unflatten } from 'flat';
 import * as XLSX from 'xlsx';
 
@@ -10,17 +11,18 @@ export class UtilsService {
     const parsedJSON = {};
 
     for (const sheet in workbook.Sheets) {
+      const sheetOptions: SheetOptions = config.sheetOptions?.find(
+        (sheetOption) => sheetOption.name === sheet,
+      );
+
       const parsedSheet: object[] = XLSX.utils.sheet_to_json(
         workbook.Sheets[sheet],
+        { ...(sheetOptions.disableHeader && { header: 'A' }) },
       );
 
       if (parsedSheet.length === 0) {
         continue;
       }
-
-      const sheetOptions: SheetOptions = config.sheetOptions?.find(
-        (sheetOption) => sheetOption.name === sheet,
-      );
 
       if (!!sheetOptions) {
         parsedJSON[sheet] = { valid: [], invalid: [] };
@@ -63,11 +65,27 @@ export class UtilsService {
               (validation) => validation.for === column,
             );
 
-            if (
-              !!columnValidation &&
-              !columnValidation.validator(row[column])
-            ) {
-              rowValid = false;
+            if (!!columnValidation) {
+              if (
+                columnValidation.type &&
+                columnValidation.type !== typeof row[column]
+              ) {
+                rowValid = false;
+              }
+
+              if (
+                columnValidation.minLength &&
+                columnValidation.minLength < row[column].length
+              ) {
+                rowValid = false;
+              }
+
+              if (
+                columnValidation.type &&
+                columnValidation.maxLength > row[column].length
+              ) {
+                rowValid = false;
+              }
             }
 
             formattedRow[newColumnName] = row[column];
@@ -85,4 +103,12 @@ export class UtilsService {
       data: unflatten(parsedJSON),
     };
   }
+}
+
+class TypeMapping {
+  int: number;
+  number: number;
+
+  character: string;
+  string: string;
 }
